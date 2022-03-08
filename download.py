@@ -2,6 +2,7 @@
 import os
 
 API2JAR = {
+    31: "org:robolectric:android-all:12-robolectric-7732740",
     30: "org:robolectric:android-all:11-robolectric-6757853",
     29: "org:robolectric:android-all:10-robolectric-5803371",
     28: "org:robolectric:android-all:9-robolectric-4913185-2",
@@ -16,7 +17,7 @@ API2JAR = {
     18: "org:robolectric:android-all:4.3_r2-robolectric-r1",
     17: "org:robolectric:android-all:4.2.2_r1.2-robolectric-r1",
     16: "org:robolectric:android-all:4.1.2_r1-robolectric-r1",
-        }
+}
 
 MIRROR_URL = 'https://maven.aliyun.com/repository/central/'
 
@@ -24,8 +25,8 @@ for api in API2JAR.keys():
     try:
         os.mkdir('android-{}'.format(api))
     except FileExistsError:
-        pass
+        continue
     artifacts = API2JAR[api].split(':')
-    cmd = 'aria2c ' + MIRROR_URL + '/'.join(artifacts) + '/' + '-'.join(artifacts[-2:]) + ".jar -o " + 'android-{}'.format(api) + "/android-all.jar"
+    cmd = 'wget ' + MIRROR_URL + '/'.join(artifacts) + '/' + '-'.join(artifacts[-2:]) + ".jar -O " + 'android-{}'.format(api) + "/android-all.jar"
     print(cmd)
     os.system(cmd)
